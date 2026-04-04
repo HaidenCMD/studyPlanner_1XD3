@@ -1,0 +1,9 @@
+Shit to do:
+
+- Must ensure user creates account with proper email ; can be created without a@b.c format
+
+- Make assignment progress bar increase in some factor, such as creating microtasks within the assignment?
+
+- When is "due soon"
+
+- Label as Computer Science Society; trademark etc
