@@ -1,9 +1,17 @@
-Shit to do:
+How to use the app:
 
-- Must ensure user creates account with proper email ; can be created without a@b.c format
+1. Sign up with:
+    name: test test
+    user: test@test.com
+    pass: 1234
 
-- Make assignment progress bar increase in some factor, such as creating microtasks within the assignment?
+2. Login with:
+   user: test@test.com
+   pass: 1234
 
-- When is "due soon"
+2. Try:
+   - Adding a course
+   - Adding assignments
+   - Marking tasks complete
 
-- Label as Computer Science Society; trademark etc
+3. Dashboard shows upcoming tasks
