@@ -1,4 +1,8 @@
 <?php
+// db.php - sets up the database connection
+// Group: Dev101, McMaster CS Society
+// every other PHP file includes this to get the $pdo object
+
 $host   = 'localhost';
 $dbname = 'student_planner';
 $user   = 'root';

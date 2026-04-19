@@ -1,9 +1,15 @@
 <?php
+// index.php - main app page
+// Group: Dev101, McMaster CS Society
+// redirects to login if the user isnt logged in, otherwise shows the planner
+
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 }
+
+// get the users initials for the nav chip
 $userName = $_SESSION['user_name'];
 $parts    = explode(' ', trim($userName));
 $initials = strtoupper(substr($parts[0], 0, 1));
@@ -19,15 +25,17 @@ if (count($parts) > 1) $initials .= strtoupper(substr(end($parts), 0, 1));
 </head>
 <body>
 
-  <!-- NAVBAR -->
+  <!-- navbar -->
   <nav class="navbar">
-    <a class="navbar-brand" href="#" onclick="showPage('dashboard')">Student Planner</a>
+    <a class="navbar-brand" id="navbar-brand" href="#">Student Planner</a>
 
-    <div class="nav-tabs">
-      <button class="nav-tab active" id="tab-dashboard" onclick="showPage('dashboard')">Dashboard</button>
-      <button class="nav-tab" id="tab-courses" onclick="showPage('courses')">Courses</button>
-      <button class="nav-tab" id="tab-form" onclick="showPage('form')">Add Assignment</button>
-      <button class="nav-tab" id="tab-checklist" onclick="showPage('checklist')">Checklist</button>
+    <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu">&#9776;</button>
+
+    <div class="nav-tabs" id="nav-tabs-wrap">
+      <button class="nav-tab active" id="tab-dashboard">Dashboard</button>
+      <button class="nav-tab" id="tab-courses">Courses</button>
+      <button class="nav-tab" id="tab-form">Add Assignment</button>
+      <button class="nav-tab" id="tab-checklist">Checklist</button>
     </div>
 
     <div class="nav-right">
@@ -39,7 +47,7 @@ if (count($parts) > 1) $initials .= strtoupper(substr(end($parts), 0, 1));
   </nav>
 
 
-  <!-- DASHBOARD -->
+  <!-- dashboard page -->
   <div class="page active" id="page-dashboard">
     <div class="container">
       <div class="page-header">
@@ -70,22 +78,22 @@ if (count($parts) > 1) $initials .= strtoupper(substr(end($parts), 0, 1));
 
       <div class="filters-bar">
         <span class="filter-label">Filter:</span>
-        <select class="filter-select" id="filter-course" onchange="renderDashboard()">
+        <select class="filter-select" id="filter-course">
           <option value="">All Courses</option>
         </select>
-        <select class="filter-select" id="filter-status" onchange="renderDashboard()">
+        <select class="filter-select" id="filter-status">
           <option value="">All Statuses</option>
           <option value="To Do">To Do</option>
           <option value="In Progress">In Progress</option>
           <option value="Completed">Completed</option>
           <option value="Overdue">Overdue</option>
         </select>
-        <select class="filter-select" id="filter-sort" onchange="renderDashboard()">
+        <select class="filter-select" id="filter-sort">
           <option value="due">Sort by Due Date</option>
           <option value="title">Sort by Title</option>
         </select>
-        <input class="filter-input" type="text" placeholder="Search assignments..." id="filter-search" oninput="renderDashboard()" />
-        <button class="btn btn-primary ml-auto" onclick="showPage('form')">+ New Assignment</button>
+        <input class="filter-input" type="text" placeholder="Search assignments..." id="filter-search" />
+        <button class="btn btn-primary ml-auto" id="btn-new-assignment">+ New Assignment</button>
       </div>
 
       <div class="assignments-grid" id="assignments-grid"></div>
@@ -93,7 +101,7 @@ if (count($parts) > 1) $initials .= strtoupper(substr(end($parts), 0, 1));
   </div>
 
 
-  <!-- COURSES -->
+  <!-- courses page -->
   <div class="page" id="page-courses">
     <div class="container">
       <div class="page-header">
@@ -102,7 +110,7 @@ if (count($parts) > 1) $initials .= strtoupper(substr(end($parts), 0, 1));
       </div>
 
       <div class="filters-bar">
-        <button class="btn btn-primary ml-auto" onclick="openAddCourseModal()">+ Add Course</button>
+        <button class="btn btn-primary ml-auto" id="btn-add-course">+ Add Course</button>
       </div>
 
       <div class="courses-grid" id="courses-grid"></div>
@@ -110,7 +118,7 @@ if (count($parts) > 1) $initials .= strtoupper(substr(end($parts), 0, 1));
   </div>
 
 
-  <!-- ASSIGNMENT FORM -->
+  <!-- add/edit assignment form -->
   <div class="page" id="page-form">
     <div class="container">
       <div class="page-header">
@@ -144,16 +152,16 @@ if (count($parts) > 1) $initials .= strtoupper(substr(end($parts), 0, 1));
         </div>
 
         <div class="form-actions">
-          <button class="btn btn-primary" onclick="saveAssignment()">Save Assignment</button>
-          <button class="btn btn-ghost" onclick="clearForm()">Clear</button>
-          <button class="btn btn-ghost ml-auto" onclick="showPage('dashboard')">Back</button>
+          <button class="btn btn-primary" id="btn-save-assignment">Save Assignment</button>
+          <button class="btn btn-ghost"   id="btn-clear-form">Clear</button>
+          <button class="btn btn-ghost ml-auto" id="btn-back-form">Back</button>
         </div>
       </div>
     </div>
   </div>
 
 
-  <!-- CHECKLIST -->
+  <!-- checklist page -->
   <div class="page" id="page-checklist">
     <div class="container">
       <div class="page-header">
@@ -163,7 +171,7 @@ if (count($parts) > 1) $initials .= strtoupper(substr(end($parts), 0, 1));
 
       <div class="filters-bar" style="margin-bottom: 20px;">
         <label style="margin:0; text-transform:none; font-size:14px;">Assignment:</label>
-        <select class="filter-select" id="checklist-select" onchange="loadChecklist()" style="min-width:220px;">
+        <select class="filter-select" id="checklist-select" style="min-width:220px;">
           <option value="">Select an assignment...</option>
         </select>
       </div>
@@ -183,18 +191,18 @@ if (count($parts) > 1) $initials .= strtoupper(substr(end($parts), 0, 1));
           <div class="checklist-items" id="checklist-items"></div>
 
           <div class="add-item-row">
-            <input type="text" id="new-item-input" placeholder="Add a task..." onkeydown="if(event.key==='Enter') addChecklistItem()" />
-            <button class="btn btn-primary" onclick="addChecklistItem()">Add</button>
+            <input type="text" id="new-item-input" placeholder="Add a task..." />
+            <button class="btn btn-primary" id="btn-add-item">Add</button>
           </div>
         </div>
 
-        <!-- Status Panel -->
+        <!-- status panel on the right side -->
         <div class="status-panel">
           <h3>Status</h3>
 
           <div class="status-select-wrap">
             <label>Current Status</label>
-            <select id="cl-status-select" onchange="updateAssignmentStatus()">
+            <select id="cl-status-select">
               <option value="To Do">To Do</option>
               <option value="In Progress">In Progress</option>
               <option value="Completed">Completed</option>
@@ -218,7 +226,7 @@ if (count($parts) > 1) $initials .= strtoupper(substr(end($parts), 0, 1));
   </div>
 
 
-  <!-- MODAL: Add/Edit Course -->
+  <!-- modal for adding or editing a course -->
   <div class="modal-overlay" id="course-modal">
     <div class="modal">
       <h3 id="course-modal-title">Add Course</h3>
@@ -246,14 +254,13 @@ if (count($parts) > 1) $initials .= strtoupper(substr(end($parts), 0, 1));
         </select>
       </div>
       <div class="modal-actions">
-        <button class="btn btn-primary" onclick="saveCourse()">Save</button>
-        <button class="btn btn-ghost" onclick="closeModal('course-modal')">Cancel</button>
+        <button class="btn btn-primary" id="btn-save-course">Save</button>
+        <button class="btn btn-ghost"   id="btn-cancel-course">Cancel</button>
       </div>
     </div>
   </div>
 
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div>Student Assignment Manager</div>
     <div>Dev101 - McMaster Computer Science Society</div>

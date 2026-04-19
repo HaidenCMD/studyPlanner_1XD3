@@ -1,11 +1,7 @@
 <?php
-/*
- * register.php
- * Student Assignment Manager - Registration Page
- * Authors: Dev101 Group - McMaster Computer Science Society
- * Description: Handles new user registration. Validates input, hashes the password,
- *              inserts the user into the database, and starts a session.
- */
+// register.php - handles new account creation
+// Group: Dev101, McMaster CS Society
+// validates the form, hashes the password, inserts into the db, then logs them in
 
 session_start();
 if (isset($_SESSION['user_id'])) {
@@ -26,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Please enter a valid email address (e.g. you@mcmaster.ca).';
     } else {
+        // check if someone already registered with this email
         $stmt = $pdo->prepare('SELECT user_id FROM users WHERE email = ?');
         $stmt->execute([$email]);
         if ($stmt->fetch()) {

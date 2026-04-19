@@ -1,10 +1,6 @@
-/*
- * style.css
- * Student Assignment Manager - Main Stylesheet
- * Authors: Dev101 Group - McMaster Computer Science Society
- * Description: Styles for all pages including navbar, cards,
- *              forms, checklist, modals, and responsive layout.
- */
+/* style.css - all the styles for the student planner
+   Group: Dev101, McMaster CS Society
+   covers navbar, cards, forms, checklist, modals etc */
 
 * {
     box-sizing: border-box;
@@ -23,9 +19,7 @@ a {
     color: #3a6bbf;
 }
 
-/* =====================
-   NAVBAR
-   ===================== */
+/* navbar */
 .navbar {
     background: #1e2d45;
     color: white;
@@ -83,7 +77,7 @@ a {
     font-size: 14px;
 }
 
-/* Hamburger button - hidden on desktop */
+/* hamburger button, only shows on mobile */
 .hamburger {
     display: none;
     background: transparent;
@@ -96,9 +90,7 @@ a {
     margin-left: auto;
 }
 
-/* =====================
-   PAGES
-   ===================== */
+/* pages - only the active one is visible */
 .page { display: none; }
 .page.active { display: block; }
 
@@ -122,9 +114,7 @@ a {
     font-size: 15px;
 }
 
-/* =====================
-   SUMMARY CARDS
-   ===================== */
+/* summary cards at the top of the dashboard */
 .summary-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -155,9 +145,7 @@ a {
     font-weight: bold;
 }
 
-/* =====================
-   FILTERS BAR
-   ===================== */
+/* filter bar above the assignment grid */
 .filters-bar {
     display: flex;
     align-items: center;
@@ -176,9 +164,7 @@ a {
     font-weight: bold;
 }
 
-/* =====================
-   INPUTS
-   ===================== */
+/* inputs - applies to all text fields, selects, textareas */
 input[type="text"],
 input[type="date"],
 input[type="number"],
@@ -203,15 +189,14 @@ input:focus, select:focus, textarea:focus {
 
 textarea { min-height: 100px; resize: vertical; }
 
+/* filter selects shouldnt be full width */
 .filter-select, .filter-input {
     width: auto;
 }
 
 .filter-input { min-width: 180px; }
 
-/* =====================
-   BUTTONS
-   ===================== */
+/* buttons */
 .btn {
     display: inline-block;
     padding: 9px 16px;
@@ -254,9 +239,7 @@ textarea { min-height: 100px; resize: vertical; }
 
 .ml-auto { margin-left: auto; }
 
-/* =====================
-   ASSIGNMENT CARDS
-   ===================== */
+/* assignment cards grid */
 .assignments-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -310,9 +293,7 @@ textarea { min-height: 100px; resize: vertical; }
     flex-wrap: wrap;
 }
 
-/* =====================
-   STATUS BADGES
-   ===================== */
+/* status badges, used on cards and checklist page */
 .status-badge {
     display: inline-block;
     padding: 3px 9px;
@@ -327,9 +308,7 @@ textarea { min-height: 100px; resize: vertical; }
 .status-done     { background: #eafaf0; color: #27ae60; border: 1px solid #9de0b5; }
 .status-overdue  { background: #fdf0f0; color: #c0392b; border: 1px solid #e0a5a5; }
 
-/* =====================
-   COURSES
-   ===================== */
+/* courses grid */
 .courses-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -368,6 +347,7 @@ textarea { min-height: 100px; resize: vertical; }
     gap: 8px;
 }
 
+/* dashed card at the end of the course grid for adding new courses */
 .add-course-card {
     background: white;
     border: 2px dashed #bcc5d3;
@@ -390,9 +370,7 @@ textarea { min-height: 100px; resize: vertical; }
     color: #3a6bbf;
 }
 
-/* =====================
-   FORM
-   ===================== */
+/* assignment form */
 .form-card {
     background: white;
     border: 1px solid #dde3ec;
@@ -431,9 +409,7 @@ label {
     flex-wrap: wrap;
 }
 
-/* =====================
-   CHECKLIST
-   ===================== */
+/* checklist page layout - main card on left, status panel on right */
 .checklist-layout {
     display: grid;
     grid-template-columns: 1fr 300px;
@@ -491,6 +467,7 @@ label {
     border-radius: 4px;
 }
 
+/* strikethrough and fade when item is done */
 .checklist-item.done { opacity: 0.6; }
 .checklist-item.done .item-text { text-decoration: line-through; color: #888; }
 
@@ -527,9 +504,7 @@ label {
 
 .status-select-wrap { margin-bottom: 14px; }
 
-/* =====================
-   MODAL
-   ===================== */
+/* modal overlay and card */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -565,9 +540,7 @@ label {
     border-top: 1px solid #eee;
 }
 
-/* =====================
-   EMPTY STATE
-   ===================== */
+/* shown when theres no assignments or nothing matches the filter */
 .empty-state {
     text-align: center;
     padding: 60px 20px;
@@ -579,9 +552,6 @@ label {
 
 .empty-state p { font-size: 16px; }
 
-/* =====================
-   FOOTER
-   ===================== */
 .footer {
     margin-top: 48px;
     padding: 16px 20px;
@@ -594,9 +564,7 @@ label {
     color: #888;
 }
 
-/* =====================
-   AUTH PAGES
-   ===================== */
+/* login and register pages */
 .auth-wrap {
     min-height: 100vh;
     display: flex;
@@ -634,9 +602,7 @@ label {
     text-align: center;
 }
 
-/* =====================
-   COLOUR TAGS
-   ===================== */
+/* colour tag css variables, used by course cards */
 .tag-blue   { --color-tag: #3a6bbf; }
 .tag-purple { --color-tag: #7b61c4; }
 .tag-green  { --color-tag: #27ae60; }
@@ -644,12 +610,10 @@ label {
 .tag-red    { --color-tag: #c0392b; }
 .tag-teal   { --color-tag: #16a085; }
 
-/* =====================
-   RESPONSIVE - Tablet
-   ===================== */
+/* responsive - tablet */
 @media (max-width: 768px) {
 
-    /* Hamburger shows, tabs collapse */
+    /* show hamburger, hide tabs by default */
     .hamburger {
         display: block;
         margin-left: auto;
@@ -682,6 +646,7 @@ label {
         margin-top: 4px;
     }
 
+    /* stack everything to single column */
     .summary-row,
     .checklist-layout,
     .form-row {
@@ -715,9 +680,7 @@ label {
     }
 }
 
-/* =====================
-   RESPONSIVE - Mobile
-   ===================== */
+/* responsive - small phones */
 @media (max-width: 480px) {
     .container { padding: 16px 14px; }
     .navbar { padding: 10px 14px; }

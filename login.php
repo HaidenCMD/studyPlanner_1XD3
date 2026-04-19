@@ -1,11 +1,7 @@
 <?php
-/*
- * login.php
- * Student Assignment Manager - Login Page
- * Authors: Dev101 Group - McMaster Computer Science Society
- * Description: Handles user login. Validates email and password,
- *              then starts a session and redirects to the main app.
- */
+// login.php - handles user login
+// Group: Dev101, McMaster CS Society
+// checks the submitted email and password, starts a session if correct
 
 session_start();
 if (isset($_SESSION['user_id'])) {

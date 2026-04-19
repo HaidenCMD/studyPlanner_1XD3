@@ -1,11 +1,7 @@
 <?php
-/*
- * assignments.php
- * Student Assignment Manager - Assignments API
- * Authors: Dev101 Group - McMaster Computer Science Society
- * Description: Handles GET, POST, PUT, and DELETE requests for assignments.
- *              All actions are scoped to the logged-in user via session.
- */
+// assignments.php - API for assignments (GET, POST, PUT, DELETE)
+// Group: Dev101, McMaster CS Society
+// all operations are tied to the logged-in user so people cant touch each others data
 
 session_start();
 require '../db.php';
@@ -20,10 +16,7 @@ if (!isset($_SESSION['user_id'])) {
 $uid    = $_SESSION['user_id'];
 $method = $_SERVER['REQUEST_METHOD'];
 
-/*
- * GET /api/assignments.php
- * Returns all assignments for the logged-in user, including checklist items.
- */
+// GET - returns all assignments for this user, with their checklist items included
 if ($method === 'GET') {
     $stmt = $pdo->prepare('
         SELECT a.assignment_id as id, c.course_code as course, a.title,
@@ -44,6 +37,7 @@ if ($method === 'GET') {
         $stmt2->execute($ids);
         $rows = $stmt2->fetchAll();
 
+        // group checklist items by assignment id
         $byAssignment = [];
         foreach ($rows as $row) {
             $aid         = $row['assignment_id'];
@@ -54,18 +48,15 @@ if ($method === 'GET') {
         }
 
         foreach ($assignments as &$a) {
-            $a['id']       = (int) $a['id'];
-            $a['progress'] = (int) $a['progress'];
+            $a['id']        = (int) $a['id'];
+            $a['progress']  = (int) $a['progress'];
             $a['checklist'] = $byAssignment[$a['id']] ?? [];
         }
     }
 
     echo json_encode($assignments);
 
-/*
- * POST /api/assignments.php
- * Creates a new assignment. Expects JSON body with title, course, dueDate, status, description.
- */
+// POST - create a new assignment
 } elseif ($method === 'POST') {
     $d    = json_decode(file_get_contents('php://input'), true);
     $stmt = $pdo->prepare('SELECT course_id FROM courses WHERE course_code=? AND user_id=?');
@@ -80,30 +71,25 @@ if ($method === 'GET') {
     $stmt->execute([$course['course_id'], $d['title'], $d['description'], $d['dueDate'] ?: null, $d['status']]);
     echo json_encode(['id' => (int) $pdo->lastInsertId()]);
 
-/*
- * PUT /api/assignments.php
- * Updates an existing assignment. If 'course' is present, updates full details.
- * Otherwise just updates status and progress.
- */
+// PUT - update an assignment (either full edit or just status/progress)
 } elseif ($method === 'PUT') {
     $d = json_decode(file_get_contents('php://input'), true);
 
     if (isset($d['course'])) {
+        // full update from the edit form
         $stmt = $pdo->prepare('SELECT course_id FROM courses WHERE course_code=? AND user_id=?');
         $stmt->execute([$d['course'], $uid]);
         $course = $stmt->fetch();
         $stmt   = $pdo->prepare('UPDATE assignments SET course_id=?, title=?, description=?, due_date=?, status=? WHERE assignment_id=?');
         $stmt->execute([$course['course_id'], $d['title'], $d['description'], $d['dueDate'] ?: null, $d['status'], $d['id']]);
     } else {
+        // just updating status and progress from the checklist
         $stmt = $pdo->prepare('UPDATE assignments SET status=?, progress_percent=? WHERE assignment_id=?');
         $stmt->execute([$d['status'], $d['progress'], $d['id']]);
     }
     echo json_encode(['ok' => true]);
 
-/*
- * DELETE /api/assignments.php?id=X
- * Deletes an assignment by ID, only if it belongs to the logged-in user.
- */
+// DELETE - remove an assignment (only if it belongs to this user)
 } elseif ($method === 'DELETE') {
     $id   = intval($_GET['id']);
     $stmt = $pdo->prepare('SELECT a.assignment_id FROM assignments a JOIN courses c ON a.course_id=c.course_id WHERE a.assignment_id=? AND c.user_id=?');

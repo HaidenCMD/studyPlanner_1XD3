@@ -1,10 +1,6 @@
-/*
- * app.js
- * Student Assignment Manager - Main JavaScript
- * Authors: Dev101 Group - McMaster Computer Science Society
- * Description: Handles all client-side logic including rendering,
- *              API calls, and UI interactions.
- */
+// app.js - main javascript file for the student planner app
+// Group: Dev101, McMaster CS Society
+// handles all the frontend stuff - rendering pages, talking to the API, updating the UI
 
 var state = {
     courses: [],
@@ -14,14 +10,7 @@ var state = {
     activeChecklistId: null
 };
 
-/*
- * api
- * Makes a fetch request to the given URL.
- * @param {string} url - The API endpoint
- * @param {string} method - HTTP method (default GET)
- * @param {object} body - Request body for POST/PUT
- * @returns {Promise} Parsed JSON response
- */
+// helper function to make API calls, method defaults to GET if not specified
 function api(url, method, body) {
     method = method || 'GET';
     var opts = { method: method, headers: { 'Content-Type': 'application/json' } };
@@ -29,18 +18,14 @@ function api(url, method, body) {
     return fetch(url, opts).then(function(res) { return res.json(); });
 }
 
-/*
- * showPage
- * Switches the visible page and updates nav tab highlighting.
- * @param {string} name - Page name (dashboard, courses, form, checklist)
- */
+// hides all pages and shows the one we want, also updates which tab looks active
 function showPage(name) {
     document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
     document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
     document.getElementById('page-' + name).classList.add('active');
     document.getElementById('tab-' + name).classList.add('active');
 
-    // close mobile menu if open
+    // close the mobile nav if its open
     var navTabs = document.getElementById('nav-tabs-wrap');
     if (navTabs) navTabs.classList.remove('open');
 
@@ -50,10 +35,8 @@ function showPage(name) {
     if (name === 'checklist') populateChecklistSelect();
 }
 
-/*
- * renderDashboard
- * Renders assignment cards with current filter/sort settings and updates summary stats.
- */
+// re-renders the dashboard cards and updates the stat counters at the top
+// also handles filtering/sorting based on whatever the user picked
 function renderDashboard() {
     var cfEl = document.getElementById('filter-course');
     var prev = cfEl.value;
@@ -66,6 +49,7 @@ function renderDashboard() {
         cfEl.appendChild(o);
     });
 
+    // figure out which assignments are due soon (within 3 days), overdue, or done
     var today = new Date();
     today.setHours(0, 0, 0, 0);
     var soon = new Date(today);
@@ -82,10 +66,11 @@ function renderDashboard() {
             dueSoon++;
         }
     });
-    document.getElementById('stat-due-soon').textContent = dueSoon;
-    document.getElementById('stat-overdue').textContent  = overdue;
+    document.getElementById('stat-due-soon').textContent  = dueSoon;
+    document.getElementById('stat-overdue').textContent   = overdue;
     document.getElementById('stat-completed').textContent = completed;
 
+    // apply filters
     var courseFilter = document.getElementById('filter-course').value;
     var statusFilter = document.getElementById('filter-status').value;
     var sortFilter   = document.getElementById('filter-sort').value;
@@ -113,12 +98,7 @@ function renderDashboard() {
     grid.innerHTML = list.map(function(a) { return assignmentCardHTML(a); }).join('');
 }
 
-/*
- * assignmentCardHTML
- * Builds HTML string for a single assignment card.
- * @param {object} a - Assignment object
- * @returns {string} HTML string
- */
+// builds the HTML for a single assignment card
 function assignmentCardHTML(a) {
     var statusMap = {
         'To Do':       'status-todo',
@@ -145,21 +125,13 @@ function assignmentCardHTML(a) {
     '</div>';
 }
 
-/*
- * formatDate
- * Formats a date string to a readable format.
- * @param {string} d - Date string (YYYY-MM-DD)
- * @returns {string} Formatted date or '--'
- */
+// formats a date string like "2025-04-01" into something readable
 function formatDate(d) {
     if (!d) return '--';
     return new Date(d + 'T00:00:00').toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
-/*
- * renderCourses
- * Renders course cards and the add-course card.
- */
+// renders all the course cards on the courses page
 function renderCourses() {
     var grid = document.getElementById('courses-grid');
     var cards = state.courses.map(function(c) {
@@ -174,16 +146,14 @@ function renderCourses() {
         '</div>';
     }).join('');
 
+    // add the dashed "add course" card at the end
     var addCard = '<div class="add-course-card" onclick="openAddCourseModal()">' +
         '<span class="plus">+</span><span>Add New Course</span></div>';
 
     grid.innerHTML = cards + addCard;
 }
 
-/*
- * openAddCourseModal
- * Opens the course modal in "add" mode (clears fields).
- */
+// opens the course modal with blank fields for adding a new course
 function openAddCourseModal() {
     state.editingCourseId = null;
     document.getElementById('course-modal-title').textContent = 'Add Course';
@@ -194,11 +164,7 @@ function openAddCourseModal() {
     document.getElementById('course-modal').classList.add('open');
 }
 
-/*
- * editCourse
- * Opens the course modal pre-filled for editing.
- * @param {number} id - Course ID
- */
+// opens the course modal pre-filled so the user can edit an existing course
 function editCourse(id) {
     var c = state.courses.find(function(x) { return x.id === id; });
     if (!c) return;
@@ -211,10 +177,7 @@ function editCourse(id) {
     document.getElementById('course-modal').classList.add('open');
 }
 
-/*
- * saveCourse
- * Saves a new or edited course via the API.
- */
+// saves a course - handles both adding new and editing existing
 function saveCourse() {
     var code  = document.getElementById('m-code').value.trim();
     var name  = document.getElementById('m-name').value.trim();
@@ -242,11 +205,7 @@ function saveCourse() {
     }
 }
 
-/*
- * deleteCourse
- * Deletes a course after confirmation.
- * @param {number} id - Course ID
- */
+// deletes a course and removes its assignments from local state too
 function deleteCourse(id) {
     if (!confirm('Delete this course? All its assignments will also be deleted.')) return;
     api('api/courses.php?id=' + id, 'DELETE').then(function() {
@@ -258,10 +217,7 @@ function deleteCourse(id) {
     });
 }
 
-/*
- * populateFormCourses
- * Fills the course dropdown on the assignment form.
- */
+// fills the course dropdown on the assignment form
 function populateFormCourses() {
     var sel = document.getElementById('f-course');
     var prev = sel.value;
@@ -275,11 +231,7 @@ function populateFormCourses() {
     if (prev) sel.value = prev;
 }
 
-/*
- * editAssignment
- * Opens the form page pre-filled for editing an assignment.
- * @param {number} id - Assignment ID
- */
+// loads an assignment's data into the form so the user can edit it
 function editAssignment(id) {
     var a = state.assignments.find(function(x) { return x.id === id; });
     if (!a) return;
@@ -287,6 +239,7 @@ function editAssignment(id) {
     document.getElementById('form-page-title').textContent   = 'Edit Assignment';
     document.getElementById('form-card-heading').textContent = 'Edit Assignment';
     showPage('form');
+    // small timeout so the form is visible before we try to fill it
     setTimeout(function() {
         document.getElementById('f-title').value       = a.title;
         document.getElementById('f-course').value      = a.course;
@@ -295,10 +248,7 @@ function editAssignment(id) {
     }, 50);
 }
 
-/*
- * saveAssignment
- * Saves a new or edited assignment via the API.
- */
+// saves a new assignment or updates an existing one
 function saveAssignment() {
     var title   = document.getElementById('f-title').value.trim();
     var course  = document.getElementById('f-course').value;
@@ -330,10 +280,7 @@ function saveAssignment() {
     }
 }
 
-/*
- * clearForm
- * Resets the assignment form fields.
- */
+// clears the assignment form fields
 function clearForm() {
     document.getElementById('f-title').value       = '';
     document.getElementById('f-due-date').value    = '';
@@ -341,11 +288,7 @@ function clearForm() {
     if (document.getElementById('f-course')) document.getElementById('f-course').selectedIndex = 0;
 }
 
-/*
- * deleteAssignment
- * Deletes an assignment after confirmation.
- * @param {number} id - Assignment ID
- */
+// deletes an assignment after the user confirms
 function deleteAssignment(id) {
     if (!confirm('Delete this assignment?')) return;
     api('api/assignments.php?id=' + id, 'DELETE').then(function() {
@@ -354,10 +297,7 @@ function deleteAssignment(id) {
     });
 }
 
-/*
- * populateChecklistSelect
- * Populates the assignment dropdown on the checklist page.
- */
+// populates the assignment dropdown on the checklist page
 function populateChecklistSelect() {
     var sel = document.getElementById('checklist-select');
     sel.innerHTML = '<option value="">Select an assignment...</option>';
@@ -367,26 +307,20 @@ function populateChecklistSelect() {
         o.textContent = a.title + ' (' + a.course + ')';
         sel.appendChild(o);
     });
+    // if we came here by clicking "Checklist" on a card, auto-select that assignment
     if (state.activeChecklistId) {
         sel.value = state.activeChecklistId;
         loadChecklist();
     }
 }
 
-/*
- * openChecklist
- * Navigates to the checklist page for a given assignment.
- * @param {number} id - Assignment ID
- */
+// navigates to the checklist page for a specific assignment
 function openChecklist(id) {
     state.activeChecklistId = id;
     showPage('checklist');
 }
 
-/*
- * loadChecklist
- * Loads and renders the checklist for the selected assignment.
- */
+// loads the checklist for whichever assignment is selected in the dropdown
 function loadChecklist() {
     var id  = parseInt(document.getElementById('checklist-select').value);
     var a   = state.assignments.find(function(x) { return x.id === id; });
@@ -403,21 +337,18 @@ function loadChecklist() {
     empty.style.display     = 'none';
     state.activeChecklistId = id;
 
-    document.getElementById('cl-title').textContent  = a.title;
-    document.getElementById('cl-course').textContent = a.course;
-    document.getElementById('cl-due').textContent    = a.dueDate ? 'Due: ' + formatDate(a.dueDate) : '';
+    document.getElementById('cl-title').textContent   = a.title;
+    document.getElementById('cl-course').textContent  = a.course;
+    document.getElementById('cl-due').textContent     = a.dueDate ? 'Due: ' + formatDate(a.dueDate) : '';
     document.getElementById('cl-status-select').value = a.status;
 
     renderChecklistItems(a);
 }
 
-/*
- * renderChecklistItems
- * Renders checklist items and updates the status badge.
- * @param {object} a - Assignment object
- */
+// renders the list of checklist items and updates the status badge
 function renderChecklistItems(a) {
-    var cl   = a.checklist || [];
+    var cl = a.checklist || [];
+
     var statusMap = {
         'To Do':       ['status-todo', 'To Do'],
         'In Progress': ['status-progress', 'In Progress'],
@@ -446,12 +377,7 @@ function renderChecklistItems(a) {
     }).join('');
 }
 
-/*
- * toggleItem
- * Toggles the done state of a checklist item and updates status.
- * @param {number} aId - Assignment ID
- * @param {number} itemId - Checklist item ID
- */
+// toggles a checklist item done/not done and auto-updates the assignment status
 function toggleItem(aId, itemId) {
     var a    = state.assignments.find(function(x) { return x.id === aId; });
     var item = a.checklist.find(function(x) { return x.id === itemId; });
@@ -459,6 +385,8 @@ function toggleItem(aId, itemId) {
 
     var done = a.checklist.filter(function(x) { return x.done; }).length;
     a.progress = a.checklist.length ? Math.round((done / a.checklist.length) * 100) : a.progress;
+
+    // automatically move status based on progress
     if (a.progress === 100) a.status = 'Completed';
     else if (a.progress > 0 && a.status === 'To Do') a.status = 'In Progress';
 
@@ -469,10 +397,7 @@ function toggleItem(aId, itemId) {
     api('api/assignments.php', 'PUT', { id: aId, status: a.status, progress: a.progress });
 }
 
-/*
- * addChecklistItem
- * Adds a new checklist item to the current assignment.
- */
+// adds a new checklist item to the current assignment
 function addChecklistItem() {
     var input = document.getElementById('new-item-input');
     var text  = input.value.trim();
@@ -488,12 +413,7 @@ function addChecklistItem() {
     });
 }
 
-/*
- * deleteItem
- * Removes a checklist item from an assignment.
- * @param {number} aId - Assignment ID
- * @param {number} itemId - Checklist item ID
- */
+// removes a checklist item from the list
 function deleteItem(aId, itemId) {
     var a = state.assignments.find(function(x) { return x.id === aId; });
     a.checklist = a.checklist.filter(function(x) { return x.id !== itemId; });
@@ -501,10 +421,7 @@ function deleteItem(aId, itemId) {
     api('api/checklist.php?id=' + itemId, 'DELETE');
 }
 
-/*
- * updateAssignmentStatus
- * Updates assignment status from the checklist status dropdown.
- */
+// called when the user manually changes the status dropdown on the checklist page
 function updateAssignmentStatus() {
     var id = parseInt(document.getElementById('checklist-select').value);
     var a  = state.assignments.find(function(x) { return x.id === id; });
@@ -514,19 +431,12 @@ function updateAssignmentStatus() {
     renderChecklistItems(a);
 }
 
-/*
- * closeModal
- * Hides the modal overlay with the given ID.
- * @param {string} id - Modal element ID
- */
+// closes a modal by removing the open class
 function closeModal(id) {
     document.getElementById(id).classList.remove('open');
 }
 
-/*
- * initApp
- * Fetches initial data and renders the dashboard.
- */
+// fetches courses and assignments from the server on startup
 function initApp() {
     Promise.all([
         api('api/courses.php'),
@@ -538,10 +448,10 @@ function initApp() {
     });
 }
 
-// Wait for the DOM to load before doing anything
+// wait for the page to fully load before attaching event listeners
 window.addEventListener('load', function() {
 
-    // Hamburger menu toggle
+    // hamburger button for mobile nav
     var hamburger = document.getElementById('hamburger-btn');
     var navWrap   = document.getElementById('nav-tabs-wrap');
     if (hamburger && navWrap) {
@@ -550,36 +460,36 @@ window.addEventListener('load', function() {
         });
     }
 
-    // Nav tab buttons
+    // nav tab buttons
     document.getElementById('tab-dashboard').addEventListener('click', function() { showPage('dashboard'); });
     document.getElementById('tab-courses').addEventListener('click',   function() { showPage('courses'); });
     document.getElementById('tab-form').addEventListener('click',      function() { showPage('form'); });
     document.getElementById('tab-checklist').addEventListener('click', function() { showPage('checklist'); });
 
-    // Dashboard filters
+    // dashboard filter dropdowns and search bar
     document.getElementById('filter-course').addEventListener('change', renderDashboard);
     document.getElementById('filter-status').addEventListener('change', renderDashboard);
     document.getElementById('filter-sort').addEventListener('change',   renderDashboard);
     document.getElementById('filter-search').addEventListener('input',  renderDashboard);
 
-    // New assignment button
+    // new assignment button on the dashboard
     var newBtn = document.getElementById('btn-new-assignment');
     if (newBtn) newBtn.addEventListener('click', function() { showPage('form'); });
 
-    // Form buttons
+    // form page buttons
     document.getElementById('btn-save-assignment').addEventListener('click', saveAssignment);
     document.getElementById('btn-clear-form').addEventListener('click',      clearForm);
     document.getElementById('btn-back-form').addEventListener('click',       function() { showPage('dashboard'); });
 
-    // Add course button (filters bar)
+    // add course button
     var addCourseBtn = document.getElementById('btn-add-course');
     if (addCourseBtn) addCourseBtn.addEventListener('click', openAddCourseModal);
 
-    // Course modal
+    // course modal buttons
     document.getElementById('btn-save-course').addEventListener('click',   saveCourse);
     document.getElementById('btn-cancel-course').addEventListener('click', function() { closeModal('course-modal'); });
 
-    // Checklist page
+    // checklist page
     document.getElementById('checklist-select').addEventListener('change', loadChecklist);
     document.getElementById('btn-add-item').addEventListener('click', addChecklistItem);
     document.getElementById('new-item-input').addEventListener('keydown', function(e) {
@@ -587,7 +497,7 @@ window.addEventListener('load', function() {
     });
     document.getElementById('cl-status-select').addEventListener('change', updateAssignmentStatus);
 
-    // Navbar brand link
+    // navbar brand link
     var brand = document.getElementById('navbar-brand');
     if (brand) brand.addEventListener('click', function(e) { e.preventDefault(); showPage('dashboard'); });
 
