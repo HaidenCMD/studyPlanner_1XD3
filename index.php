@@ -1,8 +1,18 @@
 <?php
-// index.php - main app page
-// Group: Dev101, McMaster CS Society
-// redirects to login if not logged in
+// Student Planner Project - Dev101
+// We split the work between all group members so everyone did both front end and backend
+// Everything was tested together at the end to make sure it actually works and connects properly
 
+// everything was built separately and then combined together
+// we tested all features like login, courses, assignments and checklist
+// made sure data flows properly between frontend and backend
+// overall app is working as expected
+
+// Reyan worked on dashboard and filtering
+// made the main page that shows assignments (due soon, overdue etc)
+// added filters for course and status and search bar
+// also sorting by due date and title
+// used js to update stuff dynamically without reloading
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');

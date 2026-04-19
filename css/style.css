@@ -1,6 +1,7 @@
-/* style.css - all styles for the student planner
-   Group: Dev101, McMaster CS Society
-   dark navy/blue theme to match the dev plan site */
+/* worked on styling together
+   tried to keep same theme across all pages
+   also made it responsive so it works on smaller screens
+*/
 
 * {
     box-sizing: border-box;

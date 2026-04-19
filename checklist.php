@@ -1,6 +1,9 @@
 <?php
-// checklist.php - API for checklist items (POST, PUT, DELETE)
-// Group: Dev101, McMaster CS Society
+// Om did checklist and progress tracking
+// made checklist inside assignments (add/remove items)
+// clicking checkbox updates progress
+// used ajax so it updates without refreshing
+// also made progress % update and status change
 
 session_start();
 require 'db.php';

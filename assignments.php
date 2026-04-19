@@ -1,6 +1,9 @@
 <?php
-// assignments.php - API for assignments (GET, POST, PUT, DELETE)
-// Group: Dev101, McMaster CS Society
+// Haiden did the assignment system
+// made add edit delete assignments and forms for it
+// added validation so empty stuff doesnt go through
+// connected assignments to courses properly in the database
+// handled php + sql side for assignments
 
 session_start();
 require 'db.php';

@@ -1,3 +1,7 @@
+// we all worked together on connecting everything
+// made sure courses, assignments and checklist all work together
+// tested full app multiple times and fixed bugs we found
+
 var state = {
     courses: [],
     assignments: [],

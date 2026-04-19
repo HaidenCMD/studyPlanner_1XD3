@@ -1,7 +1,9 @@
 <?php
-// register.php - handles new account creation
-// Group: Dev101, McMaster CS Society
-// validates the form, hashes the password, inserts into the db, then logs them in
+// Hani worked on user accounts and courses
+// did login and signup stuff + sessions so users stay logged in
+// also made add/edit/delete for courses
+// connected it to database with php and sql
+// made sure courses are tied to the correct user
 
 session_start();
 if (isset($_SESSION['user_id'])) {
