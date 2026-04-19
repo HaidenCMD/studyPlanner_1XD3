@@ -1,6 +1,6 @@
-/* style.css - all the styles for the student planner
+/* style.css - all styles for the student planner
    Group: Dev101, McMaster CS Society
-   covers navbar, cards, forms, checklist, modals etc */
+   dark navy/blue theme to match the dev plan site */
 
 * {
     box-sizing: border-box;
@@ -10,33 +10,35 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    color: #222;
+    background: #0f1624;
+    color: #e0e6f0;
     min-height: 100vh;
 }
 
 a {
-    color: #3a6bbf;
+    color: #4d9ef7;
 }
 
 /* navbar */
 .navbar {
-    background: #1e2d45;
+    background: #111d30;
     color: white;
-    padding: 12px 20px;
+    padding: 12px 24px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
+    border-bottom: 2px solid #1e4080;
     position: relative;
 }
 
 .navbar-brand {
     text-decoration: none;
-    color: white;
+    color: #4d9ef7;
     font-weight: bold;
-    font-size: 18px;
-    margin-right: 20px;
+    font-size: 20px;
+    margin-right: 24px;
+    letter-spacing: 0.02em;
 }
 
 .nav-tabs {
@@ -48,41 +50,44 @@ a {
 
 .nav-tab {
     background: transparent;
-    border: 1px solid rgba(255,255,255,0.3);
-    color: #ccc;
-    padding: 7px 14px;
+    border: 1px solid rgba(77,158,247,0.3);
+    color: #8bafd4;
+    padding: 7px 16px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+    transition: background 0.15s;
+}
+
+.nav-tab:hover {
+    background: rgba(77,158,247,0.1);
+    color: #e0e6f0;
 }
 
 .nav-tab.active {
-    background: #3a6bbf;
+    background: #1e4080;
     color: white;
-    border-color: #3a6bbf;
+    border-color: #4d9ef7;
 }
 
 .nav-right {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     margin-left: auto;
 }
 
 .user-chip {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #ccc;
+    color: #8bafd4;
     font-size: 14px;
 }
 
-/* hamburger button, only shows on mobile */
+/* hamburger - hidden on desktop */
 .hamburger {
     display: none;
     background: transparent;
-    border: 1px solid rgba(255,255,255,0.4);
-    color: white;
+    border: 1px solid rgba(77,158,247,0.4);
+    color: #4d9ef7;
     font-size: 20px;
     padding: 5px 10px;
     border-radius: 4px;
@@ -90,31 +95,32 @@ a {
     margin-left: auto;
 }
 
-/* pages - only the active one is visible */
+/* pages */
 .page { display: none; }
 .page.active { display: block; }
 
 .container {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 28px 20px;
+    padding: 32px 24px;
 }
 
 .page-header {
-    margin-bottom: 24px;
+    margin-bottom: 28px;
 }
 
 .page-header h1 {
-    font-size: 26px;
+    font-size: 28px;
+    color: #e0e6f0;
     margin-bottom: 6px;
 }
 
 .page-header p {
-    color: #555;
+    color: #6b8aaa;
     font-size: 15px;
 }
 
-/* summary cards at the top of the dashboard */
+/* summary cards */
 .summary-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -123,48 +129,49 @@ a {
 }
 
 .summary-card {
-    background: white;
-    border: 1px solid #dde3ec;
-    border-radius: 6px;
-    padding: 20px;
+    background: #151f35;
+    border: 1px solid #1e3460;
+    border-radius: 8px;
+    padding: 22px;
     display: flex;
     align-items: center;
     gap: 16px;
 }
 
 .summary-info .label {
-    font-size: 12px;
-    color: #777;
+    font-size: 11px;
+    color: #6b8aaa;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 4px;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
 }
 
 .summary-info .value {
-    font-size: 30px;
+    font-size: 34px;
     font-weight: bold;
+    color: #4d9ef7;
 }
 
-/* filter bar above the assignment grid */
+/* filter bar */
 .filters-bar {
     display: flex;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
     margin-bottom: 20px;
-    background: white;
-    border: 1px solid #dde3ec;
-    border-radius: 6px;
-    padding: 12px;
+    background: #151f35;
+    border: 1px solid #1e3460;
+    border-radius: 8px;
+    padding: 12px 16px;
 }
 
 .filter-label {
     font-size: 13px;
-    color: #777;
+    color: #6b8aaa;
     font-weight: bold;
 }
 
-/* inputs - applies to all text fields, selects, textareas */
+/* inputs */
 input[type="text"],
 input[type="date"],
 input[type="number"],
@@ -172,10 +179,10 @@ input[type="password"],
 input[type="email"],
 select,
 textarea {
-    background: white;
-    border: 1px solid #bcc5d3;
+    background: #0f1624;
+    border: 1px solid #1e3460;
     border-radius: 4px;
-    color: #222;
+    color: #e0e6f0;
     font-family: Arial, sans-serif;
     font-size: 15px;
     padding: 9px 12px;
@@ -184,12 +191,16 @@ textarea {
 }
 
 input:focus, select:focus, textarea:focus {
-    border-color: #3a6bbf;
+    border-color: #4d9ef7;
+}
+
+/* fixes select arrow color on dark bg */
+select {
+    appearance: auto;
 }
 
 textarea { min-height: 100px; resize: vertical; }
 
-/* filter selects shouldnt be full width */
 .filter-select, .filter-input {
     width: auto;
 }
@@ -199,38 +210,39 @@ textarea { min-height: 100px; resize: vertical; }
 /* buttons */
 .btn {
     display: inline-block;
-    padding: 9px 16px;
+    padding: 9px 18px;
     border-radius: 4px;
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     border: 1px solid transparent;
     text-decoration: none;
+    transition: background 0.15s;
 }
 
 .btn-primary {
-    background: #3a6bbf;
+    background: #1e4080;
     color: white;
-    border-color: #3a6bbf;
+    border-color: #4d9ef7;
 }
 
-.btn-primary:hover { background: #2f58a0; }
+.btn-primary:hover { background: #2a55a8; }
 
 .btn-ghost {
-    background: white;
-    color: #333;
-    border-color: #bcc5d3;
+    background: transparent;
+    color: #8bafd4;
+    border-color: #1e3460;
 }
 
-.btn-ghost:hover { background: #f0f2f5; }
+.btn-ghost:hover { background: #151f35; color: #e0e6f0; }
 
 .btn-danger {
-    background: white;
-    color: #c0392b;
-    border-color: #e0a5a5;
+    background: transparent;
+    color: #e05c5c;
+    border-color: #5c2020;
 }
 
-.btn-danger:hover { background: #fdf0f0; }
+.btn-danger:hover { background: #2a1010; }
 
 .btn-sm {
     padding: 5px 10px;
@@ -239,7 +251,7 @@ textarea { min-height: 100px; resize: vertical; }
 
 .ml-auto { margin-left: auto; }
 
-/* assignment cards grid */
+/* assignment cards */
 .assignments-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -247,12 +259,18 @@ textarea { min-height: 100px; resize: vertical; }
 }
 
 .assignment-card {
-    background: white;
-    border: 1px solid #dde3ec;
-    border-left: 4px solid #3a6bbf;
-    border-radius: 6px;
+    background: #151f35;
+    border: 1px solid #1e3460;
+    border-left: 4px solid #4d9ef7;
+    border-radius: 8px;
     padding: 18px;
     cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+.assignment-card:hover {
+    border-color: #4d9ef7;
+    border-left-color: #4d9ef7;
 }
 
 .card-top {
@@ -264,9 +282,9 @@ textarea { min-height: 100px; resize: vertical; }
 }
 
 .card-course-badge {
-    background: #eaf0fb;
-    color: #3a6bbf;
-    border: 1px solid #c0d0ef;
+    background: #1a2e55;
+    color: #4d9ef7;
+    border: 1px solid #1e4080;
     font-size: 11px;
     font-weight: bold;
     padding: 3px 8px;
@@ -274,26 +292,57 @@ textarea { min-height: 100px; resize: vertical; }
 }
 
 .card-title {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: bold;
-    margin-bottom: 6px;
+    color: #e0e6f0;
+    margin-bottom: 5px;
 }
 
 .card-meta {
     font-size: 13px;
-    color: #666;
+    color: #6b8aaa;
     margin-bottom: 12px;
+}
+
+/* progress bar on assignment cards */
+.progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 6px;
+    background: #1e3460;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #4d9ef7;
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+
+.progress-label {
+    font-size: 12px;
+    color: #6b8aaa;
+    min-width: 30px;
+    text-align: right;
 }
 
 .card-actions {
     display: flex;
     gap: 8px;
     padding-top: 10px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #1e3460;
     flex-wrap: wrap;
 }
 
-/* status badges, used on cards and checklist page */
+/* status badges */
 .status-badge {
     display: inline-block;
     padding: 3px 9px;
@@ -303,10 +352,10 @@ textarea { min-height: 100px; resize: vertical; }
     margin-left: auto;
 }
 
-.status-todo     { background: #f0f2f5; color: #555; border: 1px solid #ccc; }
-.status-progress { background: #eaf0fb; color: #3a6bbf; border: 1px solid #b0c8ef; }
-.status-done     { background: #eafaf0; color: #27ae60; border: 1px solid #9de0b5; }
-.status-overdue  { background: #fdf0f0; color: #c0392b; border: 1px solid #e0a5a5; }
+.status-todo     { background: #1a2035; color: #8bafd4; border: 1px solid #1e3460; }
+.status-progress { background: #1a2e55; color: #4d9ef7; border: 1px solid #1e4080; }
+.status-done     { background: #0f2a1a; color: #3dbf7a; border: 1px solid #1a5c35; }
+.status-overdue  { background: #2a1010; color: #e05c5c; border: 1px solid #5c2020; }
 
 /* courses grid */
 .courses-grid {
@@ -316,29 +365,30 @@ textarea { min-height: 100px; resize: vertical; }
 }
 
 .course-card {
-    background: white;
-    border: 1px solid #dde3ec;
-    border-top: 4px solid var(--color-tag, #3a6bbf);
-    border-radius: 6px;
-    padding: 18px;
+    background: #151f35;
+    border: 1px solid #1e3460;
+    border-top: 4px solid var(--color-tag, #4d9ef7);
+    border-radius: 8px;
+    padding: 20px;
 }
 
 .course-code {
     font-size: 13px;
     font-weight: bold;
-    color: #3a6bbf;
+    color: #4d9ef7;
     margin-bottom: 5px;
 }
 
 .course-name {
     font-size: 17px;
     font-weight: bold;
+    color: #e0e6f0;
     margin-bottom: 5px;
 }
 
 .course-term {
     font-size: 14px;
-    color: #666;
+    color: #6b8aaa;
     margin-bottom: 14px;
 }
 
@@ -347,11 +397,10 @@ textarea { min-height: 100px; resize: vertical; }
     gap: 8px;
 }
 
-/* dashed card at the end of the course grid for adding new courses */
 .add-course-card {
-    background: white;
-    border: 2px dashed #bcc5d3;
-    border-radius: 6px;
+    background: #151f35;
+    border: 2px dashed #1e3460;
+    border-radius: 8px;
     padding: 18px;
     min-height: 140px;
     display: flex;
@@ -360,28 +409,35 @@ textarea { min-height: 100px; resize: vertical; }
     justify-content: center;
     gap: 8px;
     cursor: pointer;
-    color: #777;
+    color: #6b8aaa;
     font-size: 15px;
     font-weight: bold;
+    transition: border-color 0.15s;
+}
+
+.add-course-card:hover {
+    border-color: #4d9ef7;
+    color: #4d9ef7;
 }
 
 .add-course-card .plus {
     font-size: 32px;
-    color: #3a6bbf;
+    color: #4d9ef7;
 }
 
 /* assignment form */
 .form-card {
-    background: white;
-    border: 1px solid #dde3ec;
-    border-radius: 6px;
-    padding: 24px;
+    background: #151f35;
+    border: 1px solid #1e3460;
+    border-radius: 8px;
+    padding: 28px;
     max-width: 700px;
 }
 
 .form-card h2 {
     font-size: 20px;
-    margin-bottom: 20px;
+    color: #e0e6f0;
+    margin-bottom: 22px;
 }
 
 .form-group { margin-bottom: 16px; }
@@ -396,57 +452,90 @@ label {
     display: block;
     font-size: 13px;
     font-weight: bold;
-    color: #444;
+    color: #8bafd4;
     margin-bottom: 5px;
 }
 
 .form-actions {
     display: flex;
     gap: 10px;
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid #eee;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #1e3460;
     flex-wrap: wrap;
 }
 
-/* checklist page layout - main card on left, status panel on right */
-.checklist-layout {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 18px;
-    align-items: start;
+/* checklist page - single card, no side panel */
+.checklist-card {
+    background: #151f35;
+    border: 1px solid #1e3460;
+    border-radius: 8px;
+    padding: 26px;
+    max-width: 760px;
 }
 
-.checklist-card, .status-panel {
-    background: white;
-    border: 1px solid #dde3ec;
-    border-radius: 6px;
-    padding: 22px;
+.checklist-header {
+    margin-bottom: 16px;
 }
-
-.checklist-header { margin-bottom: 18px; }
 
 .checklist-header h2 {
-    font-size: 20px;
-    margin-bottom: 4px;
+    font-size: 22px;
+    color: #e0e6f0;
+    margin-bottom: 5px;
 }
 
 .checklist-meta {
     font-size: 14px;
-    color: #666;
+    color: #6b8aaa;
     display: flex;
-    gap: 10px;
+    gap: 14px;
     flex-wrap: wrap;
 }
 
+/* progress bar on checklist page */
+.cl-progress-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    padding: 14px 16px;
+    background: #0f1624;
+    border: 1px solid #1e3460;
+    border-radius: 6px;
+}
+
+.cl-progress-bar {
+    flex: 1;
+    height: 10px;
+    background: #1e3460;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.cl-progress-fill {
+    height: 100%;
+    background: #4d9ef7;
+    border-radius: 6px;
+    transition: width 0.3s;
+    width: 0%;
+}
+
+.cl-progress-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #4d9ef7;
+    min-width: 36px;
+    text-align: right;
+}
+
 .section-title {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bold;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #666;
+    letter-spacing: 0.08em;
+    color: #6b8aaa;
     margin-bottom: 12px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #1e3460;
     padding-bottom: 6px;
 }
 
@@ -454,61 +543,54 @@ label {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 }
 
 .checklist-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 12px;
-    background: #f9fafc;
-    border: 1px solid #dde3ec;
-    border-radius: 4px;
+    padding: 11px 14px;
+    background: #0f1624;
+    border: 1px solid #1e3460;
+    border-radius: 5px;
 }
 
-/* strikethrough and fade when item is done */
-.checklist-item.done { opacity: 0.6; }
-.checklist-item.done .item-text { text-decoration: line-through; color: #888; }
+.checklist-item.done { opacity: 0.55; }
+.checklist-item.done .item-text { text-decoration: line-through; color: #6b8aaa; }
 
 .check-box {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #bcc5d3;
-    border-radius: 3px;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #1e4080;
+    border-radius: 4px;
     flex-shrink: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: white;
+    background: #0f1624;
 }
 
 .checklist-item.done .check-box {
-    background: #27ae60;
-    border-color: #27ae60;
+    background: #1e4080;
+    border-color: #4d9ef7;
 }
 
-.check-tick { display: none; color: white; font-size: 13px; font-weight: bold; }
+.check-tick { display: none; color: #4d9ef7; font-size: 14px; font-weight: bold; }
 .checklist-item.done .check-tick { display: block; }
-.item-text { font-size: 15px; flex: 1; }
+.item-text { font-size: 15px; flex: 1; color: #e0e6f0; }
+
+.no-items-msg { color: #6b8aaa; font-size: 14px; padding: 8px 0; }
 
 .add-item-row { display: flex; gap: 8px; }
 .add-item-row input { flex: 1; width: auto; }
 
-.status-panel h3 {
-    font-size: 17px;
-    font-weight: bold;
-    margin-bottom: 16px;
-}
-
-.status-select-wrap { margin-bottom: 14px; }
-
-/* modal overlay and card */
+/* modal */
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.45);
+    background: rgba(0,0,0,0.65);
     z-index: 200;
     display: none;
     align-items: center;
@@ -519,101 +601,104 @@ label {
 .modal-overlay.open { display: flex; }
 
 .modal {
-    background: white;
+    background: #151f35;
+    border: 1px solid #1e3460;
     width: 100%;
     max-width: 480px;
-    padding: 26px;
-    border-radius: 6px;
-    border: 1px solid #dde3ec;
+    padding: 28px;
+    border-radius: 8px;
 }
 
 .modal h3 {
     font-size: 20px;
-    margin-bottom: 18px;
+    color: #e0e6f0;
+    margin-bottom: 20px;
 }
 
 .modal-actions {
     display: flex;
     gap: 8px;
-    margin-top: 18px;
-    padding-top: 14px;
-    border-top: 1px solid #eee;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #1e3460;
 }
 
-/* shown when theres no assignments or nothing matches the filter */
+/* empty state */
 .empty-state {
     text-align: center;
     padding: 60px 20px;
-    color: #888;
-    border: 2px dashed #d0d7e2;
-    border-radius: 6px;
-    background: white;
+    color: #6b8aaa;
+    border: 2px dashed #1e3460;
+    border-radius: 8px;
+    background: #151f35;
 }
 
 .empty-state p { font-size: 16px; }
 
 .footer {
-    margin-top: 48px;
-    padding: 16px 20px;
-    border-top: 1px solid #dde3ec;
+    margin-top: 60px;
+    padding: 18px 24px;
+    border-top: 1px solid #1e3460;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 10px;
     font-size: 13px;
-    color: #888;
+    color: #3a5070;
 }
 
-/* login and register pages */
+/* auth pages */
 .auth-wrap {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 24px;
+    background: #0f1624;
 }
 
 .auth-card {
-    background: white;
-    border: 1px solid #dde3ec;
-    border-radius: 6px;
-    padding: 32px;
+    background: #151f35;
+    border: 1px solid #1e3460;
+    border-radius: 8px;
+    padding: 36px;
     width: 100%;
     max-width: 400px;
 }
 
-.auth-card h1 { font-size: 24px; margin-bottom: 6px; }
-.auth-card p { font-size: 14px; color: #666; margin-bottom: 22px; }
+.auth-card h1 { font-size: 26px; color: #e0e6f0; margin-bottom: 6px; }
+.auth-card p  { font-size: 14px; color: #6b8aaa; margin-bottom: 24px; }
 
 .auth-error {
-    background: #fdf0f0;
-    color: #c0392b;
-    border: 1px solid #e0a5a5;
+    background: #2a1010;
+    color: #e05c5c;
+    border: 1px solid #5c2020;
     border-radius: 4px;
-    padding: 10px 12px;
+    padding: 10px 14px;
     font-size: 14px;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 }
 
 .auth-footer {
-    margin-top: 18px;
+    margin-top: 20px;
     font-size: 14px;
-    color: #666;
+    color: #6b8aaa;
     text-align: center;
 }
 
-/* colour tag css variables, used by course cards */
-.tag-blue   { --color-tag: #3a6bbf; }
-.tag-purple { --color-tag: #7b61c4; }
-.tag-green  { --color-tag: #27ae60; }
-.tag-orange { --color-tag: #e67e22; }
-.tag-red    { --color-tag: #c0392b; }
-.tag-teal   { --color-tag: #16a085; }
+.auth-footer a { color: #4d9ef7; }
+
+/* colour tag variables for course cards */
+.tag-blue   { --color-tag: #4d9ef7; }
+.tag-purple { --color-tag: #9b7de8; }
+.tag-green  { --color-tag: #3dbf7a; }
+.tag-orange { --color-tag: #f0934a; }
+.tag-red    { --color-tag: #e05c5c; }
+.tag-teal   { --color-tag: #2dbfb8; }
 
 /* responsive - tablet */
 @media (max-width: 768px) {
 
-    /* show hamburger, hide tabs by default */
     .hamburger {
         display: block;
         margin-left: auto;
@@ -625,13 +710,11 @@ label {
         flex-direction: column;
         gap: 6px;
         padding-top: 10px;
-        border-top: 1px solid rgba(255,255,255,0.15);
+        border-top: 1px solid rgba(77,158,247,0.2);
         margin-top: 6px;
     }
 
-    .nav-tabs.open {
-        display: flex;
-    }
+    .nav-tabs.open { display: flex; }
 
     .nav-tab {
         width: 100%;
@@ -641,14 +724,12 @@ label {
     .nav-right {
         width: 100%;
         justify-content: space-between;
-        border-top: 1px solid rgba(255,255,255,0.1);
+        border-top: 1px solid rgba(77,158,247,0.1);
         padding-top: 8px;
         margin-top: 4px;
     }
 
-    /* stack everything to single column */
     .summary-row,
-    .checklist-layout,
     .form-row {
         grid-template-columns: 1fr;
     }
@@ -665,27 +746,17 @@ label {
         align-items: stretch;
     }
 
-    .filter-select, .filter-input {
-        width: 100%;
-    }
-
+    .filter-select, .filter-input { width: 100%; }
     .ml-auto { margin-left: 0; }
 
-    .form-actions {
-        flex-direction: column;
-    }
-
-    .card-actions {
-        flex-wrap: wrap;
-    }
+    .form-actions { flex-direction: column; }
+    .card-actions { flex-wrap: wrap; }
 }
 
 /* responsive - small phones */
 @media (max-width: 480px) {
     .container { padding: 16px 14px; }
     .navbar { padding: 10px 14px; }
-    .form-card, .checklist-card, .status-panel, .modal, .auth-card {
-        padding: 16px;
-    }
-    .summary-info .value { font-size: 24px; }
+    .form-card, .checklist-card, .modal, .auth-card { padding: 18px; }
+    .summary-info .value { font-size: 28px; }
 }

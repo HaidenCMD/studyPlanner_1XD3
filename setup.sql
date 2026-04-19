@@ -1,6 +1,3 @@
-CREATE DATABASE IF NOT EXISTS student_planner;
-USE student_planner;
-
 CREATE TABLE IF NOT EXISTS users (
     user_id       INT PRIMARY KEY AUTO_INCREMENT,
     name          VARCHAR(100) NOT NULL,

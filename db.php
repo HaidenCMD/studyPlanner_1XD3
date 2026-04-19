@@ -4,9 +4,9 @@
 // every other PHP file includes this to get the $pdo object
 
 $host   = 'localhost';
-$dbname = 'student_planner';
-$user   = 'root';
-$pass   = '';
+$dbname = 'pater222_db';
+$user   = 'pater222_local';
+$pass   = '3VxiYT/[I]7Pe4X.';
 
 $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
