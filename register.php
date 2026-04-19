@@ -1,4 +1,12 @@
 <?php
+/*
+ * register.php
+ * Student Assignment Manager - Registration Page
+ * Authors: Dev101 Group - McMaster Computer Science Society
+ * Description: Handles new user registration. Validates input, hashes the password,
+ *              inserts the user into the database, and starts a session.
+ */
+
 session_start();
 if (isset($_SESSION['user_id'])) {
     header('Location: index.php');
@@ -15,6 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$name || !$email || !$password) {
         $error = 'All fields are required.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = 'Please enter a valid email address (e.g. you@mcmaster.ca).';
     } else {
         $stmt = $pdo->prepare('SELECT user_id FROM users WHERE email = ?');
         $stmt->execute([$email]);
@@ -32,22 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sign Up | StudentPlanner</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - Student Planner</title>
   <link rel="stylesheet" href="css/style.css" />
-  <style>
-    .auth-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
-    .auth-card { background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 36px 40px; width: 100%; max-width: 420px; }
-    .auth-card h1 { font-size: 22px; margin-bottom: 6px; }
-    .auth-card p { font-size: 13px; color: var(--txt2); margin-bottom: 24px; }
-    .auth-error { background: rgba(255,90,106,0.12); color: var(--red); border: 1px solid rgba(255,90,106,0.25); border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 16px; }
-    .auth-footer { margin-top: 20px; font-size: 13px; color: var(--txt2); text-align: center; }
-    .auth-footer a { color: var(--blue); }
-  </style>
 </head>
 <body>
   <div class="auth-wrap">
@@ -60,17 +61,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <form method="POST">
         <div class="form-group">
           <label for="name">Full Name</label>
-          <input type="text" id="name" name="name" placeholder="e.g. Hani Mahdi" required />
+          <input type="text" id="name" name="name" placeholder="e.g. Jane Smith" required />
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="text" id="email" name="email" placeholder="you@mcmaster.ca" required />
+          <input type="email" id="email" name="email" placeholder="you@mcmaster.ca" required />
         </div>
         <div class="form-group">
           <label for="password">Password</label>
           <input type="password" id="password" name="password" placeholder="Choose a password" required />
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px;">Create Account</button>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px;">Create Account</button>
       </form>
       <div class="auth-footer">Already have an account? <a href="login.php">Sign in</a></div>
     </div>

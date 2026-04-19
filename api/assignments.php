@@ -1,4 +1,12 @@
 <?php
+/*
+ * assignments.php
+ * Student Assignment Manager - Assignments API
+ * Authors: Dev101 Group - McMaster Computer Science Society
+ * Description: Handles GET, POST, PUT, and DELETE requests for assignments.
+ *              All actions are scoped to the logged-in user via session.
+ */
+
 session_start();
 require '../db.php';
 header('Content-Type: application/json');
@@ -12,6 +20,10 @@ if (!isset($_SESSION['user_id'])) {
 $uid    = $_SESSION['user_id'];
 $method = $_SERVER['REQUEST_METHOD'];
 
+/*
+ * GET /api/assignments.php
+ * Returns all assignments for the logged-in user, including checklist items.
+ */
 if ($method === 'GET') {
     $stmt = $pdo->prepare('
         SELECT a.assignment_id as id, c.course_code as course, a.title,
@@ -50,6 +62,10 @@ if ($method === 'GET') {
 
     echo json_encode($assignments);
 
+/*
+ * POST /api/assignments.php
+ * Creates a new assignment. Expects JSON body with title, course, dueDate, status, description.
+ */
 } elseif ($method === 'POST') {
     $d    = json_decode(file_get_contents('php://input'), true);
     $stmt = $pdo->prepare('SELECT course_id FROM courses WHERE course_code=? AND user_id=?');
@@ -64,6 +80,11 @@ if ($method === 'GET') {
     $stmt->execute([$course['course_id'], $d['title'], $d['description'], $d['dueDate'] ?: null, $d['status']]);
     echo json_encode(['id' => (int) $pdo->lastInsertId()]);
 
+/*
+ * PUT /api/assignments.php
+ * Updates an existing assignment. If 'course' is present, updates full details.
+ * Otherwise just updates status and progress.
+ */
 } elseif ($method === 'PUT') {
     $d = json_decode(file_get_contents('php://input'), true);
 
@@ -79,6 +100,10 @@ if ($method === 'GET') {
     }
     echo json_encode(['ok' => true]);
 
+/*
+ * DELETE /api/assignments.php?id=X
+ * Deletes an assignment by ID, only if it belongs to the logged-in user.
+ */
 } elseif ($method === 'DELETE') {
     $id   = intval($_GET['id']);
     $stmt = $pdo->prepare('SELECT a.assignment_id FROM assignments a JOIN courses c ON a.course_id=c.course_id WHERE a.assignment_id=? AND c.user_id=?');
