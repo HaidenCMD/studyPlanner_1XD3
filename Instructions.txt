@@ -1,0 +1,17 @@
+How to use the app:
+
+1. Sign up with:
+    name: test test
+    user: test@test.com
+    pass: 1234
+
+2. Login with:
+   user: test@test.com
+   pass: 1234
+
+2. Try:
+   - Adding a course
+   - Adding assignments
+   - Marking tasks complete
+
+3. Dashboard shows upcoming tasks

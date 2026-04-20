@@ -201,7 +201,7 @@ select {
     appearance: auto;
 }
 
-textarea { min-height: 100px; resize: vertical; }
+textarea { min-height: 100px; resize: none; }
 
 .filter-select, .filter-input {
     width: auto;
@@ -326,7 +326,6 @@ textarea { min-height: 100px; resize: vertical; }
     height: 100%;
     background: #4d9ef7;
     border-radius: 4px;
-    transition: width 0.3s;
 }
 
 .progress-label {
@@ -518,7 +517,6 @@ label {
     height: 100%;
     background: #4d9ef7;
     border-radius: 6px;
-    transition: width 0.3s;
     width: 0%;
 }
 
