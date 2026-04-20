@@ -19,7 +19,7 @@ function api(url, method, body) {
             .then(res => res.json());
     }
 
-    // 🔥 everything else uses POST
+    // else use POST
     const form = new URLSearchParams();
     form.append('_method', method); // THIS is the key
 

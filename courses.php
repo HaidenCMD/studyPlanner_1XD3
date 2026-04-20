@@ -1,8 +1,7 @@
 <?php
-// Hani worked on user accounts and courses
-// did login and signup stuff + sessions so users stay logged in
-// also made add/edit/delete for courses
-// connected it to database with php and sql
+// Hani worked on courses
+// made add/edit/delete for courses
+// connected to db with php and sql
 // made sure courses are tied to the correct user
 
 session_start();

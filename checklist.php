@@ -22,7 +22,7 @@ if ($method === 'POST' && isset($_POST['_method'])) {
     $method = strtoupper($_POST['_method']);
 }
 
-// POST - add a new checklist item to an assignment
+// POST to add a new checklist item to an assignment
 if ($method === 'POST') {
     $assignmentId = (int)($_POST['assignment_id'] ?? 0);
     $text = $_POST['text'] ?? '';
@@ -48,7 +48,7 @@ if ($method === 'POST') {
     exit;
 }
 
-// PUT - toggle an item as done or not done
+// PUT to toggle an item as done or not done
 if ($method === 'PUT') {
     $id = (int)($_POST['id'] ?? 0);
     $done = isset($_POST['done']) && ($_POST['done'] === 'true' || $_POST['done'] === '1' || $_POST['done'] == 1);

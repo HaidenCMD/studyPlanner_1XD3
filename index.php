@@ -159,7 +159,7 @@ if (count($parts) > 1) $initials .= strtoupper(substr(end($parts), 0, 1));
   </div>
 
 
-  <!-- checklist - no status panel, just tasks + progress bar -->
+  <!-- checklist, no status panel, just tasks + progress bar -->
   <div class="page" id="page-checklist">
     <div class="container">
       <div class="page-header">

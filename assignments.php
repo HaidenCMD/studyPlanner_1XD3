@@ -3,7 +3,7 @@
 // made add edit delete assignments and forms for it
 // added validation so empty stuff doesnt go through
 // connected assignments to courses properly in the database
-// handled php + sql side for assignments
+// handled php and sql side for assignments
 
 session_start();
 require 'db.php';
@@ -22,7 +22,7 @@ if ($method === 'POST' && isset($_POST['_method'])) {
     $method = strtoupper($_POST['_method']);
 }
 
-// GET - returns all assignments for this user, with their checklist items included
+// GET (returns all assignments for user; also includes their checklist items)
 if ($method === 'GET') {
     $stmt = $pdo->prepare('
         SELECT a.assignment_id as id, c.course_code as course, a.title,
@@ -64,7 +64,7 @@ if ($method === 'GET') {
     exit;
 }
 
-// POST - create a new assignment
+// POST (create new assignment)
 if ($method === 'POST') {
     $courseCode = $_POST['course'] ?? '';
     $title = $_POST['title'] ?? '';
@@ -98,7 +98,7 @@ if ($method === 'POST') {
     exit;
 }
 
-// PUT - update an assignment
+// PUT (update assignment)
 if ($method === 'PUT') {
     $id = (int)($_POST['id'] ?? 0);
 
@@ -162,7 +162,7 @@ if ($method === 'PUT') {
     exit;
 }
 
-// DELETE - remove an assignment
+// DELETE (remove assignment)
 if ($method === 'DELETE') {
     $id = (int)($_POST['id'] ?? 0);
 
